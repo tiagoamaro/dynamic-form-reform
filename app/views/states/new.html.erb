@@ -1,0 +1,35 @@
+<div class="row columns">
+  <h1>Dynamic Form</h1>
+</div>
+
+<%= form_for @form, url: states_path do |f| %>
+    <% f.object.errors.messages.each do |attr, messages| %>
+        <div class="callout alert">
+          <%= attr %>: <%= messages.join(', ') %>
+        </div>
+    <% end %>
+
+    <div class="row">
+      <div class="medium-12 columns">
+        <label>
+          Zone
+          <select name="zone" id="zone"></select>
+        </label>
+      </div>
+      <div class="medium-12 columns">
+        <label>
+          Country
+          <select name="country" id="country"></select>
+        </label>
+      </div>
+      <div class="medium-12 columns">
+        <label>
+          State Name
+          <%= f.text_field :name, placeholder: 'State Name' %>
+        </label>
+      </div>
+      <div class="medium-12 columns">
+        <input type="submit" class="button expanded" value="Submit">
+      </div>
+    </div>
+<% end %>
