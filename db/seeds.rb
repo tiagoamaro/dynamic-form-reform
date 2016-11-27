@@ -10,13 +10,14 @@ america = Zone.create(name: 'America')
 oceania = Zone.create(name: 'Oceania')
 
 brazil    = Country.create(name: 'Brazil')
-usa       = Country.create(name: 'United States')
 australia = Country.create(name: 'Australia')
-japan     = Country.create(name: 'Japan')
 
 ZoneMember.create(zone: america, country: brazil)
-ZoneMember.create(zone: america, country: usa)
 ZoneMember.create(zone: oceania, country: australia)
-ZoneMember.create(zone: oceania, country: japan)
 
-# State, arbitrary, as its the goal of this demo
+State.create(name: 'Rio de Janeiro', country: brazil)
+State.create(name: 'Minas Gerais', country: brazil)
+State.create(name: 'Queensland', country: australia)
+State.create(name: 'New South Wales', country: australia)
+
+# City, arbitrary, as its the goal of this demo
