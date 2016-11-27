@@ -1,35 +1,20 @@
-<div class="row columns">
+<div class="container">
   <h1>Dynamic Form</h1>
-</div>
 
-<%= form_for @form, url: states_path do |f| %>
-    <% f.object.errors.messages.each do |attr, messages| %>
-        <div class="callout alert">
-          <%= attr %>: <%= messages.join(', ') %>
-        </div>
+  <%= simple_form_for @form, url: states_path do |f| %>
+      <%= f.input :zone %>
+      <%= f.input :country_id, as: :select %>
+      <%= f.input :name, placeholder: 'State Name', label: 'State Name' %>
+      <%= f.button :submit, class: 'button expanded', value: 'Submit' %>
+  <% end %>
+
+  <hr>
+
+  <h2>Created States</h2>
+
+  <ul>
+    <% State.find_each do |state| %>
+        <li><%= state.inspect %></li>
     <% end %>
-
-    <div class="row">
-      <div class="medium-12 columns">
-        <label>
-          Zone
-          <select name="zone" id="zone"></select>
-        </label>
-      </div>
-      <div class="medium-12 columns">
-        <label>
-          Country
-          <select name="country" id="country"></select>
-        </label>
-      </div>
-      <div class="medium-12 columns">
-        <label>
-          State Name
-          <%= f.text_field :name, placeholder: 'State Name' %>
-        </label>
-      </div>
-      <div class="medium-12 columns">
-        <input type="submit" class="button expanded" value="Submit">
-      </div>
-    </div>
-<% end %>
+  </ul>
+</div>
