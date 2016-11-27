@@ -3,7 +3,7 @@
     <%= f.input :country_id, collection: f.object.country_options, include_blank: false %>
     <%= f.input :state_id, collection: f.object.state_options, include_blank: false %>
     <%= f.input :name %>
-    <%= f.button :submit, value: 'Submit', class: 'btn btn-primary' %>
+    <%= f.submit 'Submit', class: 'btn btn-primary' %>
     <%= link_to 'Cancel', cities_path, class: 'btn btn-default' %>
 <% end %>
 
@@ -15,7 +15,9 @@
     var newStatePath      = "<%= new_city_path %>";
 
     $updateableFields.on("change", function () {
-      window.location = newStatePath + "?" + $form.serialize();
+      $form.prop("action", newStatePath);
+      $form.prop("method", "get");
+      $form.submit();
     })
   })(jQuery);
 </script>
