@@ -1,0 +1,6 @@
+<%= simple_form_for @form, url: states_path, method: :post do |f| %>
+    <%= f.input :zone_id, collection: f.object.zone_options, include_blank: false %>
+    <%= f.input :country_id, collection: f.object.country_options, include_blank: false %>
+    <%= f.input :name, placeholder: 'State Name', label: 'State Name' %>
+    <%= f.button :submit, class: 'button expanded', value: 'Submit' %>
+<% end %>
