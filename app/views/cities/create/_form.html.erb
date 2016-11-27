@@ -1,0 +1,21 @@
+<%= simple_form_for @form, url: cities_path, html: { class: 'create-state-form' } do |f| %>
+    <%= f.input :zone_id, collection: f.object.zone_options, include_blank: false %>
+    <%= f.input :country_id, collection: f.object.country_options, include_blank: false %>
+    <%= f.input :state_id, collection: f.object.state_options, include_blank: false %>
+    <%= f.input :name, placeholder: 'State Name', label: 'State Name' %>
+    <%= f.button :submit, value: 'Submit', class: 'btn btn-primary' %>
+    <%= link_to 'Cancel', cities_path, class: 'btn btn-default' %>
+<% end %>
+
+
+<script type="text/javascript">
+  (function ($) {
+    var $form         = $(".create-state-form");
+    var newStatePath  = "<%= new_city_path %>";
+
+    $("#cities_create_zone_id, #cities_create_country_id").on("change", function () {
+      window.location = newStatePath + "?" + $form.serialize();
+    })
+  })(jQuery);
+</script>
+

@@ -1,8 +1,9 @@
-module States
+module Cities
   class CreateForm < Reform::Form
     property :zone_id, virtual: true
+    property :country_id, virtual: true
 
-    property :country_id
+    property :state_id
     property :name
 
     validates :name,
@@ -14,9 +15,16 @@ module States
     end
 
     def country_options
-      scope = ZoneMember.includes(:country).where(zone_id: self.zone_id)
+      scope = ZoneMember.where(zone_id: self.zone_id)
       scope.all.map do |zm|
         [zm.country.name, zm.id]
+      end
+    end
+
+    def state_options
+      scope = State.where(country_id: self.country_id)
+      scope.all.map do |state|
+        [state.name, state.id]
       end
     end
 
@@ -26,9 +34,11 @@ module States
       if options
         self.zone_id    = options[:zone_id]
         self.country_id = options[:country_id]
+        self.state_id = options[:state_id]
       else
         self.zone_id    = default_zone.id
         self.country_id = default_country.id
+        self.state_id = default_state.id
       end
     end
 
@@ -40,6 +50,10 @@ module States
 
     def default_country
       default_zone.countries.first
+    end
+
+    def default_state
+      default_country.states.first
     end
   end
 end
