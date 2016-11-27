@@ -1,5 +1,9 @@
 class StatesController < ApplicationController
   def index
+    @states = State.all
+  end
+
+  def new
     @form = States::CreateForm.new(State.new)
     @form.prepopulate!(params[:states_create])
   end
@@ -9,9 +13,11 @@ class StatesController < ApplicationController
 
     if @form.validate(params[:states_create])
       @form.save
-    end
 
-    render :index
+      redirect_to action: :index
+    else
+      render :new
+    end
   end
 
   def destroy_all
