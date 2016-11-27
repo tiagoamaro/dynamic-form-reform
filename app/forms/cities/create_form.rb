@@ -8,6 +8,7 @@ module Cities
 
     validates :name,
               :country_id,
+              :state_id,
               presence: true
 
     def zone_options
@@ -15,14 +16,14 @@ module Cities
     end
 
     def country_options
-      scope = ZoneMember.where(zone_id: self.zone_id)
+      scope = zone.countries
       scope.all.map do |zm|
-        [zm.country.name, zm.id]
+        [zm.name, zm.id]
       end
     end
 
     def state_options
-      scope = State.where(country_id: self.country_id)
+      scope = country.states
       scope.all.map do |state|
         [state.name, state.id]
       end
@@ -31,29 +32,22 @@ module Cities
     def prepopulate!(options = {})
       super # Calls form + nested prepopulators
 
-      if options
-        self.zone_id    = options[:zone_id]
-        self.country_id = options[:country_id]
-        self.state_id = options[:state_id]
-      else
-        self.zone_id    = default_zone.id
-        self.country_id = default_country.id
-        self.state_id = default_state.id
-      end
+      options ||= {}
+
+      self.zone_id    = options[:zone_id]
+      self.country_id = options[:country_id]
+      self.state_id   = options[:state_id]
+      self.name       = options[:name]
     end
 
     private
 
-    def default_zone
-      Zone.first
+    def zone
+      Zone.find_by(id: self.zone_id) || Zone.first
     end
 
-    def default_country
-      default_zone.countries.first
-    end
-
-    def default_state
-      default_country.states.first
+    def country
+      zone.countries.find_by(id: self.country_id) || zone.countries.first
     end
   end
 end
