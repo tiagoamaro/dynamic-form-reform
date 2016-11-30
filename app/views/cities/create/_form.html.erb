@@ -1,6 +1,6 @@
 <%= simple_form_for @form, url: cities_path, html: { class: 'create-state-form' } do |f| %>
-    <%= f.input :zone_id, collection: f.object.zone_options, include_blank: false %>
-    <%= f.input :country_id, collection: f.object.country_options, include_blank: false %>
+    <%= f.input :zone_id, collection: f.object.zone_options, include_blank: false, input_html: { 'data-update' => true } %>
+    <%= f.input :country_id, collection: f.object.country_options, include_blank: false, input_html: { 'data-update' => true } %>
     <%= f.input :state_id, collection: f.object.state_options, include_blank: false %>
     <%= f.input :name %>
     <%= f.submit 'Submit', class: 'btn btn-primary' %>
@@ -11,13 +11,11 @@
 <script type="text/javascript">
   (function ($) {
     var $form             = $(".create-state-form");
-    var $updateableFields = $("#cities_create_zone_id, #cities_create_country_id");
+    var $updateableFields = $("[data-update]", $form);
     var newStatePath      = "<%= new_city_path %>";
 
     $updateableFields.on("change", function () {
-      $form.prop("action", newStatePath);
-      $form.prop("method", "get");
-      $form.submit();
+      $form.prop({action: newStatePath, method: "get"}).submit();
     })
   })(jQuery);
 </script>
