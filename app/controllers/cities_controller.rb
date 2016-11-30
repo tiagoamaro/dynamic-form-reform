@@ -8,15 +8,12 @@ class CitiesController < ApplicationController
     @form.prepopulate!(params[:cities_create])
 
     request.variant = params[:variant].to_sym
-    respond_to do |format|
-      format.html do |html|
-        html.rails { render :new }
-      end
-    end
   end
 
   def create
     @form = Cities::CreateForm.new(City.new)
+
+    request.variant = params[:variant].to_sym
 
     if @form.validate(params[:cities_create])
       @form.save
