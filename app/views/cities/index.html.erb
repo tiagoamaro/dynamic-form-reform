@@ -5,7 +5,8 @@
 
   <h2>Cities</h2>
 
-  <%= link_to 'Create City', new_city_path, class: 'btn btn-success' %>
+  <%= link_to 'Create City (Rails Form)', new_city_path(variant: :rails), class: 'btn btn-success' %>
+  <%= link_to 'Create City (React Form)', new_city_path(variant: :react), class: 'btn btn-success' %>
 
   <table class="table table-striped table-hover">
     <thead>
